@@ -5,6 +5,6 @@
 export default interface IHandler {
 
   setNext(handler: IHandler): IHandler;
-  handle(eevent: Object, context: Object): Promise<String>;
+  handle(event: Object, context: Object): Promise<String>;
 
 }

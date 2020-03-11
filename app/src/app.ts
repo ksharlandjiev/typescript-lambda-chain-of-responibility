@@ -66,12 +66,13 @@ export const lambdaHandler = async (event, context) => {
  * Chaining all Commands together to be executed one by one.
  * @param handlers Array of all handlers to be wired together. 
  */
-function wireChain(handlers: Array<string>): IHandler|null {
+function wireChain(handlers: Array<String>): IHandler|null {
 
     let handlerInstance = null;
     const commands = [];
     handlers && handlers.forEach(handler => {
-        handlerInstance = HandlerFactory.getHandler(handler);
+        handlerInstance =  HandlerFactory.getHandler(handler);
+
         //Wire the chian.
         if (commands.length > 0 ) {
             commands[ commands.length - 1].setNext(handlerInstance)
