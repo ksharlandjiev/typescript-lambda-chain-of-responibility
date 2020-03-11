@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "hello-world",
+      "type": "node",
+      "request": "attach",
+      "address": "localhost",
+      "port": 5858,
+      "localRoot": "${workspaceRoot}/hello-world",
+      "remoteRoot": "/var/task",
+      "protocol": "inspector",
+      "stopOnEntry": false,
+      "sourceMapPathOverrides": {
+        "webpack:///./~/*": "${workspaceRoot}/hello-world/node_modules/*",
+        "webpack:///./*": "${workspaceRoot}/hello-world/*",
+        "webpack:///*": "*"
+      }
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Backend asynchronous analytics application.
+  Used to fire anlaytics events without the use of front end.
+  
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  AnalyticsFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: app/
+      Handler: build/app.lambdaHandler
+      Runtime: nodejs12.x
+      Environment:
+        Variables:          
+          GA_TOKEN: '123123-321321-123123-321312'
+          MIXPANEL_TOKEN: '3211231-321312-123123-321'      
+      Events:
+        Analytics:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /a
+            Method: get
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  AnalyticsApi:
+    Description: "API Gateway endpoint URL for Prod stage for the Analtyics function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/a/"
+  AnalyticsFunction:
+    Description: "Analytics Lambda Function ARN"
+    Value: !GetAtt AnalyticsFunction.Arn
+  AnalyticsFunctionIamRole:
+    Description: "Implicit IAM Role created for the Analtyics function"
+    Value: !GetAtt AnalyticsFunctionRole.Arn
