@@ -4,7 +4,8 @@
 ## Description
 Node.js / TypeScript implementation of Chain-of-responsibility pattern with AWS Lambda function.
 IMPORTANT: 
-Do to the nature of Lambda this can only funciton if all handlers are synchronous.
+Do to the nature of Lambda this can only run if all handlers are synchronous. 
+As such this is constrained to the execution time of any lambda. 
 
 ## Project setup
 ```
