@@ -1,7 +1,7 @@
-//import 'source-map-support/register' //- enable for debugging!
-import ChainsConfig from './config/ChiansConfig';
-import HandlerFactory from './HandlerFactory';
-import IHandler from './interfaces/IHandler';
+// import 'source-map-support/register' //- enable for debugging!
+import ChainsConfig from './config/ChiansConfig'
+import HandlerFactory from './HandlerFactory'
+import IHandler from './interfaces/IHandler'
 
 /**
  *
@@ -18,7 +18,7 @@ import IHandler from './interfaces/IHandler';
  * @param {Object} event.body - A JSON string of the request payload.
  * @param {boolean} event.body.isBase64Encoded - A boolean flag to indicate if the applicable request payload is Base64-encode
  *
- * Context doc: https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-context.html 
+ * Context doc: https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-context.html
  * @param {Object} context
  * @param {string} context.logGroupName - Cloudwatch Log Group name
  * @param {string} context.logStreamName - Cloudwatch Log stream name.
@@ -35,23 +35,23 @@ import IHandler from './interfaces/IHandler';
  * @returns {string} object.statusCode - HTTP Status Code to be returned to the client
  * @returns {Object} object.headers - HTTP Headers to be returned
  * @returns {Object} object.body - JSON Payload to be returned
- * 
+ *
  */
 export const lambdaHandler = async (event, context) => {
     try {
         if (ChainsConfig && event && event.requestContext &&  event.requestContext.path && ChainsConfig[event.requestContext.path]) {
-            
-            const chainConfig = ChainsConfig[event.requestContext.path];
-            const handler = wireChain(chainConfig.chain);            
-            
-            handler && handler.handle(event, context);
 
-            return chainConfig.response;
+            const chainConfig = ChainsConfig[event.requestContext.path]
+            const handler = wireChain(chainConfig.chain)
+
+            handler && handler.handle(event, context)
+
+            return chainConfig.response
         }
-        
+
     } catch (err) {
-        console.log(err);
-        return err;
+        console.log(err)
+        return err
     }
 
     return {
@@ -60,25 +60,25 @@ export const lambdaHandler = async (event, context) => {
             error: 'path not found',
         })
     }
-};
+}
 
 /**
  * Chaining all Commands together to be executed one by one.
- * @param handlers Array of all handlers to be wired together. 
+ * @param handlers Array of all handlers to be wired together.
  */
-function wireChain(handlers: Array<String>): IHandler|null {
+function wireChain(handlers: string[]): IHandler|null {
 
-    let handlerInstance = null;
-    const commands = [];
+    let handlerInstance = null
+    const commands = []
     handlers && handlers.forEach(handler => {
-        handlerInstance =  HandlerFactory.getHandler(handler);
+        handlerInstance =  HandlerFactory.getHandler(handler)
 
-        //Wire the chian.
+        // Wire the chian.
         if (commands.length > 0 ) {
             commands[ commands.length - 1].setNext(handlerInstance)
         }
-        commands.push(handlerInstance);
-    });
+        commands.push(handlerInstance)
+    })
 
-    return commands.length && commands[0] || null;
+    return commands.length && commands[0] || null
 }

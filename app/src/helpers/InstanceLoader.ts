@@ -1,11 +1,11 @@
 export default class InstanceLoader {
-  constructor(private context: Object) {
+  constructor(private context: object) {
 
   }
 
   getInstance(name: string, ...args: any[]) {
-      var instance = Object.create(this.context[name].prototype);
-      instance.constructor.apply(instance, args);
-      return instance;
+      const instance = Object.create(this.context[name].prototype)
+      instance.constructor.apply(instance, args)
+      return instance
   }
 }

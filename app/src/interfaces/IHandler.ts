@@ -4,7 +4,7 @@
  */
 export default interface IHandler {
 
-  setNext(handler: IHandler): IHandler;
-  handle(event: Object, context: Object): Promise<String>;
+  setNext(handler: IHandler): IHandler
+  handle(event: object, context: object): Promise<string>
 
 }

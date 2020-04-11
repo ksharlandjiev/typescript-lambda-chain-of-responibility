@@ -1,6 +1,6 @@
 const ChainsConfig = {
-  "/test": { 
-    chain: ["HandlerOne", "HandlerTwo"],
+  '/test': {
+    chain: ['HandlerOne', 'HandlerTwo'],
     response: {
       statusCode: 301,
       headers: {
@@ -8,6 +8,6 @@ const ChainsConfig = {
       }
     }
   }
-};
+}
 
-export default ChainsConfig;
+export default ChainsConfig
