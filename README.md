@@ -2,7 +2,7 @@
 
 # AWS Lambda - Chain-of-responsibility pattern
 ## Description
-Node.js / TypeScript implementation of Chain-of-responsibility pattern using in AWS Lambda function.
+Node.js / TypeScript implementation of Chain-of-responsibility pattern with AWS Lambda function.
 IMPORTANT: 
 Do to the nature of Lambda this can only funciton if all handlers are synchronous.
 
