@@ -1,6 +1,6 @@
 const ChainsConfig = {
-  "/uninstall": { 
-    chain: ["GoogleAnalyticsHandler", "MixpanelHandler"],
+  "/test": { 
+    chain: ["HandlerOne", "HandlerTwo"],
     response: {
       statusCode: 301,
       headers: {

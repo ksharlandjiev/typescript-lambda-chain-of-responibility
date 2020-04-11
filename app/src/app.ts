@@ -39,7 +39,7 @@ import IHandler from './interfaces/IHandler';
  */
 export const lambdaHandler = async (event, context) => {
     try {
-        if (ChainsConfig && event.requestContext.path && ChainsConfig[event.requestContext.path]) {
+        if (ChainsConfig && event && event.requestContext &&  event.requestContext.path && ChainsConfig[event.requestContext.path]) {
             
             const chainConfig = ChainsConfig[event.requestContext.path];
             const handler = wireChain(chainConfig.chain);            

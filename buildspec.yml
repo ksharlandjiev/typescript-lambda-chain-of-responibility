@@ -1,0 +1,65 @@
+version: 0.2
+env:
+  variables:
+    BUILD_S3: "chain-of-responsibility-test"
+  exported-variables:
+    - BUILD_ENV
+    - PACKAGE_NAME
+    - NEW_VERSION
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+    commands:
+      # DOWNLOAD SONAR SCANNER
+      # - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-linux.zip
+      # - unzip sonar-scanner-cli-3.3.0.1492-linux.zip
+      # - export PATH=$PATH:./sonar-scanner-3.3.0.1492-linux/bin/            
+      # END OF DOWNLOAD SONAR SCANNER      
+      - cd app/ 
+
+      # GENERATE A NEW VERSION
+      # - export VERSION=$(npm version patch)
+      # - export NEW_VERSION=$(echo $VERSION | awk -F. -v OFS=. 'NF==1{print ++$NF}; NF>1{if(length($NF+1)>length($NF))$(NF-1)++; $NF=sprintf("%0*d", length($NF), ($NF+1)%(10^length($NF))); print}')
+      # END OF GENERATE A NEW VERSION
+
+      - export NEW_VERSION=$(npm version patch)      
+      - export PROJECT_NAME=$(node -p "require('./package.json').name")
+      - export PACKAGE_NAME=${NEW_VERSION}_$(date +%Y-%m-%d-%H-%M-%S)_${BUILD_ENV}
+      - echo "Package - ${PROJECT_NAME}"      
+      - echo "New version ${NEW_VERSION}"
+      - npm i      
+      
+  pre_build:
+    commands:      
+      - echo "Running lint test:"
+      - npm run lint      
+      - echo "Running tests and Generating Code Coverage..."
+      - npm run test
+      # - npm run test:lcov      
+      # - echo "Send code for static code analysis"
+      # - sonar-scanner
+  build:
+    commands:
+      - echo "Start build for ${BUILD_ENV}"
+      - cd ../      
+      - ./build.sh ${BUILD_ENV}      
+  post_build:
+    commands:
+      - echo "Build complete. Uploading artifacts"
+      - aws cloudformation package --template-file template-${BUILD_ENV}.yaml --s3-bucket $BUILD_S3 --output-template-file cf_template.yml
+      # - git tag ${NEW_VERSION}
+      # - npm version ${NEW_VERSION}
+      # - git commit package.json -m 'CodeBuild version update'
+      # - git push origin --tags
+
+artifacts:
+  files:
+    - cf_template.yml
+# secondary-artifacts:
+#   files:
+#     - '**/*'
+#   base-directory: .aws-sam/build
+#     name: artifacts/${PACKAGE_NAME}.zip
+    
+

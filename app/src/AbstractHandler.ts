@@ -9,7 +9,7 @@ export default abstract class AbstractHandler implements IHandler {
         this.nextHandler = handler;
         // Returning a handler from here will let us link handlers in a
         // convenient way like this:
-        // GA.setNext(Mixpanel).setNext(GB);
+        // Handler.setNext(Mixpanel).setNext(GB);
         return handler;
     }
 

@@ -1,14 +1,14 @@
 import IHandler from './interfaces/IHandler'
 
-import GoogleAnalyticsHandler from './handlers/GoogleAnalyticsHandler';
-import MixpanelHandler from './handlers/MixpanelHandler'
+import HandlerOne from './handlers/HandlerOne';
+import HandlerTwo from './handlers/HandlerTwo'
 
 export default class HandlerFactory { 
   
   static getHandler(type: String): IHandler {
       switch (type) {
-        case 'GoogleAnalyticsHandler': return new GoogleAnalyticsHandler();
-        case 'MixpanelHandler': return new MixpanelHandler();
+        case 'HandlerOne': return new HandlerOne();
+        case 'HandlerTwo': return new HandlerTwo();
         default: console.log('Factory handler not found', type);
       }
   }

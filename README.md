@@ -2,31 +2,31 @@
 
 ## Project setup
 ```
-cd hello-world
-npm install
+cd app
+npm i
 ```
 
-### Local compile
+### Local compile from the root folder
 ```
-sh ./build.sh
+sh ./build.sh dev
 ```
 
 ### SAM Build
 ```
-./build.sh && sam build
+sam build -t template-dev.yaml
 ```
 
-### Invoke function locally
+### Invoke function locally (Docker required)
 ```
-sam local invoke "HelloWorldFunction" -e events/event.json
+sam local invoke "ChainORrespFunction" -e events/event.json -t template-dev.yaml
 ```
 
-### Start API
+### Start API (Docker required)
 ```
-sam local start-api
+sam local start-api -t template-dev.yaml
 ```
 
 ### Build and Invoke
 ```
-sh build.sh && sam build && sam local invoke "AnalyticsFunction" -e events/event.json
+sh build.sh dev && sam local invoke "ChainORrespFunction" -e events/event.json -t template-dev.yaml
 ```
