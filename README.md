@@ -1,6 +1,10 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ksharlandjiev_typescript-lambda-chain-of-responibility&metric=alert_status)](https://sonarcloud.io/dashboard?id=ksharlandjiev_typescript-lambda-chain-of-responibility)
 
-# Chain-of-responsibility pattern implemented with AWS Lambda
+# AWS Lambda - Chain-of-responsibility pattern
+## Description
+Node.js / TypeScript implementation of Chain-of-responsibility pattern using in AWS Lambda function.
+IMPORTANT: 
+Do to the nature of Lambda this can only funciton if all handlers are synchronous.
 
 ## Project setup
 ```
