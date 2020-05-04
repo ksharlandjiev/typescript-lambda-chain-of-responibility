@@ -2,6 +2,8 @@
 import ChainsConfig from './config/ChiansConfig'
 import HandlerFactory from './HandlerFactory'
 import IHandler from './interfaces/IHandler'
+import IResponse from './interfaces/IResponse'
+import iResponse from './interfaces/IResponse'
 
 /**
  *
@@ -37,16 +39,18 @@ import IHandler from './interfaces/IHandler'
  * @returns {Object} object.body - JSON Payload to be returned
  *
  */
-export const lambdaHandler = async (event, context) => {
+export const lambdaHandler =  (event, context, callback) : IResponse  => {
+    console.log('[event]', JSON.stringify(event));
+    console.log('[context]', JSON.stringify(context));
     try {
-        if (ChainsConfig && event && event.requestContext &&  event.requestContext.path && ChainsConfig[event.requestContext.path]) {
+        if (ChainsConfig && event.path && ChainsConfig[event.path]) {
 
-            const chainConfig = ChainsConfig[event.requestContext.path]
+            const chainConfig = ChainsConfig[event.path]
             const handler = wireChain(chainConfig.chain)
 
-            handler && handler.handle(event, context)
+            const response = handler && handler.handle(event, context, callback)
 
-            return chainConfig.response
+            return response;
         }
 
     } catch (err) {

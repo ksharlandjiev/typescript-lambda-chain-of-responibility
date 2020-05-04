@@ -7,6 +7,7 @@
   "author": "SAM CLI",
   "license": "MIT",
   "scripts": {
+    "build": "npm run-script webpack",
     "test": "nyc mocha -r ts-node/register ./src/__tests__/unit/*.ts",
     "test:clean": "mocha -r ts-node/register ./src/__tests__/unit/*.ts",
     "test:lcov": "nyc --reporter=lcov npm run test",
@@ -39,5 +40,8 @@
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-node-externals": "^1.7.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.656.0"
   }
 }

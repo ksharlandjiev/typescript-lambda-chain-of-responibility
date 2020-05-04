@@ -1,14 +1,12 @@
 import IHandler from './interfaces/IHandler'
 
-import HandlerOne from './handlers/HandlerOne'
-import HandlerTwo from './handlers/HandlerTwo'
+import TextractHandler from './handlers/TextractHandler'
 
 export default class HandlerFactory {
 
   static getHandler(type: string): IHandler {
       switch (type) {
-        case 'HandlerOne': return new HandlerOne()
-        case 'HandlerTwo': return new HandlerTwo()
+        case 'TextractHandler': return new TextractHandler()
         default: console.log('Factory handler not found', type)
       }
   }
