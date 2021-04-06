@@ -24,4 +24,4 @@ for dir in *; do
 done
 
 cd $ROOT_DIR 
-sam build -t template.yaml
+sam build -t template-$1.yaml
